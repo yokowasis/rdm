@@ -15,7 +15,7 @@ services:
       - 80
 
   db:
-    image: rdm-mysql:latest
+    image: yokowasis/rdm-mysql:latest
     environment:
       - MYSQL_DATABASE=${DB_NAME}
       - MYSQL_USER=${DB_USER}
