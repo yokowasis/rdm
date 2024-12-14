@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  web:
+    image: yokowasis/rdm
+    environment:
+      - SERVICE_FQDN_RDM=${SERVICE_FQDN_RDM:-}
+      - DB_HOST=db
+      - DB_USERNAME=${DB_USER:-dbuser}
+      - DB_PASSWORD=${DB_PASS:-123123}
+      - DB_DATABASE=${DB_NAME:-dbname}
+    depends_on:
+      - db
+    expose:
+      - 80
+
+  db:
+    image: mysql:5.7
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+    expose:
+      - 3306
+    volumes:
+      - db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      - SERVICE_FQDN_PMA=${SERVICE_FQDN_PMA:-}
+      - PMA_HOST=db
+      - PMA_USER=${DB_USER}
+      - PMA_PASSWORD=${DB_PASS}
+    expose:
+      - 8080
+    depends_on:
+      - db
+
+volumes:
+  db_data:
