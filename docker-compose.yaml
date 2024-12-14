@@ -6,9 +6,9 @@ services:
     environment:
       - SERVICE_FQDN_RDM=${SERVICE_FQDN_RDM:-}
       - DB_HOST=db
-      - DB_USERNAME=${DB_USER:-dbuser}
-      - DB_PASSWORD=${DB_PASS:-123123}
-      - DB_DATABASE=${DB_NAME:-dbname}
+      - DB_USERNAME=${DB_USER:-rdm}
+      - DB_PASSWORD=${DB_PASS:-rdm}
+      - DB_DATABASE=${DB_NAME:-rdm}
     depends_on:
       - db
     expose:
