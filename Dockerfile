@@ -13,3 +13,20 @@ RUN cd /tmp && \
 
 COPY . /var/www/html/
 WORKDIR /var/www/html/
+
+ENV DB_HOST=localhost
+ENV DB_USERNAME=root
+ENV DB_DATABASE=mydatabase
+ENV DB_PASSWORD=mypassword
+
+RUN echo "<?php\n\
+defined('BASEPATH') OR exit('No direct script access allowed');\n\
+\$host = '${DB_HOST}';\n\
+\$databaseuser = '${DB_USERNAME}';\n\
+\$databasename = '${DB_DATABASE}';\n\
+\$dbpassword = '${DB_PASSWORD}';\n\
+define('DB_SERVER', \$host);\n\
+define('DB_USERNAME', \$databaseuser);\n\
+define('DB_PASSWORD', \$dbpassword);\n\
+define('DB_DATABASE', \$databasename);\n\
+?>" > /var/www/html/config.php
