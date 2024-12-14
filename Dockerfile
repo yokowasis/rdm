@@ -2,6 +2,8 @@ FROM php:7.4-apache
 
 RUN a2enmod rewrite
 
+RUN docker-php-ext-install mysqli
+
 RUN cd /tmp && \
   curl -sSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz > ioncube_loaders_lin_x86-64.tar.gz && \
   tar -xf ioncube_loaders_lin_x86-64.tar.gz && \
