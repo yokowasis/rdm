@@ -60,6 +60,7 @@ RUN mkdir -p /etc/apache2/ssl && \
     -out /etc/apache2/ssl/apache-selfsigned.crt \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
 
+    
 # Configure Apache for both HTTP and HTTPS
 RUN echo "\
 Listen 3000\n\
