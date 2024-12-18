@@ -87,27 +87,7 @@ ENV DB_DATABASE=mydatabase
 ENV DB_PASSWORD=mypassword
 
 # Expose HTTP (80) and HTTPS (443, 3000) ports
-EXPOSE 80 443 3000
-
-# Configure Apache for both HTTP and HTTPS
-RUN echo "\
-Listen 3000\n\
-<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html\n\
-</VirtualHost>\n\
-<VirtualHost *:443>\n\
-    DocumentRoot /var/www/html\n\
-    SSLEngine on\n\
-    SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt\n\
-    SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key\n\
-</VirtualHost>\n\
-<VirtualHost *:3000>\n\
-    DocumentRoot /var/www/html\n\
-    SSLEngine on\n\
-    SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt\n\
-    SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key\n\
-</VirtualHost>\n" > /etc/apache2/sites-available/default-ssl.conf && \
-    a2ensite default-ssl.conf
+EXPOSE 80
 
 # Default command
 ENTRYPOINT ["entrypoint.sh"]
