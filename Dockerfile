@@ -70,6 +70,12 @@ RUN echo "\
     SSLEngine on\n\
     SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt\n\
     SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key\n\
+</VirtualHost>\n\
+<VirtualHost *:3000>\n\
+    DocumentRoot /var/www/html\n\
+    SSLEngine on\n\
+    SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt\n\
+    SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key\n\
 </VirtualHost>\n" > /etc/apache2/sites-available/default-ssl.conf && \
     a2ensite default-ssl.conf
 
@@ -99,8 +105,8 @@ ENV DB_USERNAME=root
 ENV DB_DATABASE=mydatabase
 ENV DB_PASSWORD=mypassword
 
-# Expose HTTP (80) and HTTPS (443) ports
-EXPOSE 80 443
+# Expose HTTP (80) and HTTPS (443, 3000) ports
+EXPOSE 80 443 3000
 
 # Default command
 ENTRYPOINT ["entrypoint.sh"]
