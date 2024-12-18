@@ -1,7 +1,7 @@
 FROM php:7.4-apache
 
 # Enable Apache mod_rewrite and SSL modules
-RUN a2enmod rewrite ssl
+RUN a2enmod rewrite ssl headers
 
 # Install necessary dependencies and PHP extensions, including GD
 RUN apt-get update && apt-get install -y \
