@@ -1,2 +1,0 @@
-ERROR - 2024-10-30 19:36:24 --> Query error: Duplicate entry 'VDB4U2ErUWtWWVU5WWltczNpMWR1UT09OmJUUmtjalJ6TkdoaU1YTTBaREJ1T...' for key 'lembaga_id' - Invalid query: ALTER TABLE e_prestasi ADD UNIQUE KEY lembaga_id (lembaga_id,tahunajaran_id,semester_id,siswa_id,prestasi_nama);
-ERROR - 2024-10-30 19:36:27 --> Query error: Duplicate entry '2021-1-84-2021100000000000029-5-latihan' for key 'tahunajaran_id' - Invalid query: ALTER TABLE e_komponennilai ADD UNIQUE KEY tahunajaran_id (tahunajaran_id,semester_id,mapel_id,kelas_id,jenisnilai_id,komponennilai_nama);

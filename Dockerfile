@@ -73,7 +73,7 @@ RUN echo "max_execution_time = 300\n" >> /usr/local/etc/php/conf.d/custom.ini &&
     echo "max_input_vars = 10000\n" >> /usr/local/etc/php/conf.d/custom.ini
 
 # Copy application files
-COPY . /var/www/html/
+COPY src /var/www/html/
 WORKDIR /var/www/html/
 
 # Set up entrypoint
