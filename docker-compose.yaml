@@ -13,6 +13,8 @@ services:
       - db
     expose:
       - 80
+    volumes:
+      - uploads:/var/www/html/__uploads
 
   db:
     image: yokowasis/rdm-mysql:latest
