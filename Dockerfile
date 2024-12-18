@@ -62,11 +62,10 @@ RUN mkdir -p /etc/apache2/ssl && \
     -out /etc/apache2/ssl/apache-selfsigned.crt \
     -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
 
-# Configure Apache to use SSL
+# Configure Apache for both HTTP and HTTPS
 RUN echo "\
 <VirtualHost *:80>\n\
     DocumentRoot /var/www/html\n\
-    Redirect permanent / https://localhost/\n\
 </VirtualHost>\n\
 <VirtualHost *:443>\n\
     DocumentRoot /var/www/html\n\
