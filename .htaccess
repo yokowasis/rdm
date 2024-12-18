@@ -5,12 +5,6 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php/$1 [L]
 
-# Enable HSTS to force HTTPS
-<IfModule mod_headers.c>
-Header always set Content-Security-Policy: upgrade-insecure-requests
-Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-</IfModule>
-
 <IfModule php7_module>
    php_value allow_url_fopen On
    php_flag asp_tags On
