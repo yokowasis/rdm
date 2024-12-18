@@ -84,6 +84,10 @@ RUN cd /tmp && \
   rm -rf ioncube && \
   echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20190902/ioncube_loader_lin_7.4.so" > /usr/local/etc/php/conf.d/00-ioncube.ini
 
+# Configure PHP settings for timeout and max input vars
+RUN echo "max_execution_time = 300\n" >> /usr/local/etc/php/conf.d/custom.ini && \
+    echo "max_input_vars = 10000\n" >> /usr/local/etc/php/conf.d/custom.ini
+
 # Copy application files
 COPY . /var/www/html/
 WORKDIR /var/www/html/
