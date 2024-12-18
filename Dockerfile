@@ -77,7 +77,7 @@ COPY src /var/www/html/
 WORKDIR /var/www/html/
 
 # Set up entrypoint
-COPY entrypoint.sh /usr/local/bin/
+COPY src/entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Environment variables
