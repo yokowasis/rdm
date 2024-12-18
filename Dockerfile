@@ -52,9 +52,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Enable OpenSSL
-RUN docker-php-ext-install openssl
-
 # Generate self-signed SSL certificate
 RUN mkdir -p /etc/apache2/ssl && \
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
