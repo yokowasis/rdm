@@ -1,5 +1,7 @@
 FROM wordpress:php7.4-apache
 
+RUN a2enmod headers
+
 # Install ionCube Loader
 RUN cd /tmp && \
   curl -sSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz > ioncube_loaders_lin_x86-64.tar.gz && \
