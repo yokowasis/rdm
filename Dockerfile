@@ -3,7 +3,7 @@ FROM php:7.4-apache
 # Enable Apache mod_rewrite and SSL modules
 RUN a2enmod rewrite ssl
 
-# Install necessary dependencies and PHP extensions
+# Install necessary dependencies and PHP extensions, including GD
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
@@ -23,12 +23,13 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     --no-install-recommends \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install \
+    gd \
     bcmath \
     bz2 \
     calendar \
     exif \
-    gd \
     gettext \
     intl \
     ldap \
