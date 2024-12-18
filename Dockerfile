@@ -1,9 +1,9 @@
 FROM php:7.4-apache
 
-# Enable Apache mod_rewrite
-RUN a2enmod rewrite
+# Enable Apache mod_rewrite and SSL modules
+RUN a2enmod rewrite ssl
 
-# Install necessary extensions
+# Install necessary dependencies and PHP extensions
 RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
@@ -19,7 +19,10 @@ RUN apt-get update && apt-get install -y \
     libldap2-dev \
     libgmp-dev \
     libpspell-dev \
-    libmagickwand-dev --no-install-recommends \
+    libmagickwand-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
+    --no-install-recommends \
     && docker-php-ext-install \
     bcmath \
     bz2 \
@@ -41,9 +44,37 @@ RUN apt-get update && apt-get install -y \
     sysvshm \
     xsl \
     zip \
+    curl \
+    mbstring \
+    xml \
+    simplexml \
     && pecl install imagick \
     && docker-php-ext-enable imagick \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Enable OpenSSL
+RUN docker-php-ext-install openssl
+
+# Generate self-signed SSL certificate
+RUN mkdir -p /etc/apache2/ssl && \
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/apache2/ssl/apache-selfsigned.key \
+    -out /etc/apache2/ssl/apache-selfsigned.crt \
+    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
+
+# Configure Apache to use SSL
+RUN echo "\
+<VirtualHost *:80>\n\
+    DocumentRoot /var/www/html\n\
+    Redirect permanent / https://localhost/\n\
+</VirtualHost>\n\
+<VirtualHost *:443>\n\
+    DocumentRoot /var/www/html\n\
+    SSLEngine on\n\
+    SSLCertificateFile /etc/apache2/ssl/apache-selfsigned.crt\n\
+    SSLCertificateKeyFile /etc/apache2/ssl/apache-selfsigned.key\n\
+</VirtualHost>\n" > /etc/apache2/sites-available/default-ssl.conf && \
+    a2ensite default-ssl.conf
 
 # Install ionCube Loader
 RUN cd /tmp && \
@@ -53,16 +84,23 @@ RUN cd /tmp && \
   rm -rf ioncube && \
   echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20190902/ioncube_loader_lin_7.4.so" > /usr/local/etc/php/conf.d/00-ioncube.ini
 
+# Copy application files
 COPY . /var/www/html/
 WORKDIR /var/www/html/
 
+# Set up entrypoint
 COPY entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
+# Environment variables
 ENV DB_HOST=localhost
 ENV DB_USERNAME=root
 ENV DB_DATABASE=mydatabase
 ENV DB_PASSWORD=mypassword
 
+# Expose HTTP (80) and HTTPS (443) ports
+EXPOSE 80 443
+
+# Default command
 ENTRYPOINT ["entrypoint.sh"]
 CMD ["apache2-foreground"]
