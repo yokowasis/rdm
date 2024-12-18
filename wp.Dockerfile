@@ -4,11 +4,11 @@ RUN a2enmod headers
 
 # Install ionCube Loader
 RUN cd /tmp && \
-  curl -sSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz > ioncube_loaders_lin_x86-64.tar.gz && \
-  tar -xf ioncube_loaders_lin_x86-64.tar.gz && \
-  cp ioncube/ioncube_loader_lin_7.4.so /usr/local/lib/php/extensions/no-debug-non-zts-20190902/ && \
-  rm -rf ioncube && \
-  echo "zend_extension = /usr/local/lib/php/extensions/no-debug-non-zts-20190902/ioncube_loader_lin_7.4.so" > /usr/local/etc/php/conf.d/00-ioncube.ini
+    curl -sSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -o ioncube.tar.gz && \
+    tar xzf ioncube.tar.gz && \
+    cp ioncube/ioncube_loader_lin_7.4.so /usr/local/lib/php/extensions/ && \
+    echo "zend_extension=ioncube_loader_lin_7.4.so" > /usr/local/etc/php/conf.d/00-ioncube.ini && \
+    rm -rf /tmp/ioncube*
 
 # Configure PHP settings for timeout and max input vars
 RUN echo "max_execution_time = 300\n" >> /usr/local/etc/php/conf.d/custom.ini && \
