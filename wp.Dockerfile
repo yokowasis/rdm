@@ -1,7 +1,5 @@
 FROM wordpress:php7.4-apache
 
-RUN a2enmod headers
-
 # Install ionCube Loader
 RUN cd /tmp && \
     curl -sSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz -o ioncube.tar.gz && \
@@ -30,6 +28,8 @@ ENV DB_HOST=localhost
 ENV DB_USERNAME=root
 ENV DB_DATABASE=mydatabase
 ENV DB_PASSWORD=mypassword
+
+RUN a2enmod headers
 
 # Default command
 ENTRYPOINT ["entrypoint.sh"]
