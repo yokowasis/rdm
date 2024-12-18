@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   web:
-    image: yokowasis/rdm
+    image: yokowasis/rdm:latest
     environment:
       - SERVICE_FQDN_RDM=${SERVICE_FQDN_RDM:-}
       - DB_HOST=db
