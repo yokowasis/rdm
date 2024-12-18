@@ -62,6 +62,7 @@ RUN mkdir -p /etc/apache2/ssl && \
 
 # Configure Apache for both HTTP and HTTPS
 RUN echo "\
+Listen 3000\n\
 <VirtualHost *:80>\n\
     DocumentRoot /var/www/html\n\
 </VirtualHost>\n\
