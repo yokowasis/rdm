@@ -25,6 +25,9 @@ RUN apt-get update && apt-get install -y \
     --no-install-recommends \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install \
+    pcntl \
+    ffi \
+    pspell \
     gd \
     bcmath \
     bz2 \
