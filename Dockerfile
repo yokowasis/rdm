@@ -56,13 +56,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-enable imagick \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Generate self-signed SSL certificate
-RUN mkdir -p /etc/apache2/ssl && \
-    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-    -keyout /etc/apache2/ssl/apache-selfsigned.key \
-    -out /etc/apache2/ssl/apache-selfsigned.crt \
-    -subj "/C=US/ST=State/L=City/O=Organization/OU=Department/CN=localhost"
-
 # Install ionCube Loader
 RUN cd /tmp && \
   curl -sSL https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz > ioncube_loaders_lin_x86-64.tar.gz && \
@@ -78,6 +71,9 @@ RUN echo "max_execution_time = 300\n" >> /usr/local/etc/php/conf.d/custom.ini &&
 # Copy application files
 COPY src /var/www/html/
 WORKDIR /var/www/html/
+
+# Set ownership of application files
+RUN chown -R www-data:www-data /var/www/html
 
 # Set up entrypoint
 COPY src/entrypoint.sh /usr/local/bin/
