@@ -14,3 +14,5 @@ define('DB_DATABASE', \$databasename);
 ?>" > /var/www/html/config.php
 
 exec "$@"
+
+cp -f index1.php index.php
